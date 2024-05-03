@@ -4,6 +4,7 @@ ctx = Context()
 
 ctx.matches = r"""
 app: vscode
+and not app: windows_file_browser
 """
 
 ctx.tags = ["user.cursorless"]
