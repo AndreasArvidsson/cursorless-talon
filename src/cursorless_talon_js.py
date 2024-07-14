@@ -37,7 +37,6 @@ class Actions:
         """Set document selection"""
         anchor = selection["anchor"]
         active = selection["active"]
-        print("new", anchor, active)
 
         el = ui.focused_element()
         text_pattern = el.text_pattern2
