@@ -41,9 +41,8 @@ class Actions:
         el = ui.focused_element()
         text_pattern = el.text_pattern2
         document_range = text_pattern.document_range
-        selection_range = text_pattern.selection[0]
 
-        set_selection(document_range, selection_range, anchor, active)
+        set_selection(document_range, anchor, active)
 
     def cursorless_js_set_text(
         text: str,  # pyright: ignore [reportGeneralTypeIssues]
@@ -53,17 +52,12 @@ class Actions:
         el.value_pattern.value = text
 
 
-def set_selection(
-    document_range: TextRange, selection_range: TextRange, start: int, end: int
-):
-    selection_start, selection_end = get_selection(
-        document_range,
-        selection_range,
-    )
-
-    selection_range.move_endpoint_by_unit("Start", "Character", start - selection_start)
-    selection_range.move_endpoint_by_unit("End", "Character", end - selection_end)
-    selection_range.select()
+def set_selection(document_range: TextRange, start: int, end: int):
+    range = document_range.clone()
+    range.move_endpoint_by_range("End", "Start", target=document_range)
+    range.move_endpoint_by_unit("End", "Character", end)
+    range.move_endpoint_by_unit("Start", "Character", start)
+    range.select()
 
 
 def get_selection(
