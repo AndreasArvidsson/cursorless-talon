@@ -16,18 +16,15 @@ class Actions:
         el = ui.focused_element()
         text_pattern = el.text_pattern2
         document_range = text_pattern.document_range
+        caret_range = text_pattern.caret_range
         selection_range = text_pattern.selection[0]
-
-        start, end = get_selection(
-            document_range,
-            selection_range,
-        )
+        anchor, active = get_selection(document_range, selection_range, caret_range)
 
         return {
             "text": document_range.text,
             "selection": {
-                "anchor": start,
-                "active": end,
+                "anchor": anchor,
+                "active": active,
             },
         }
 
@@ -52,7 +49,9 @@ class Actions:
         el.value_pattern.value = text
 
 
-def set_selection(document_range: TextRange, start: int, end: int):
+def set_selection(document_range: TextRange, anchor: int, active: int):
+    start = min(anchor, active)
+    end = max(anchor, active)
     range = document_range.clone()
     range.move_endpoint_by_range("End", "Start", target=document_range)
     range.move_endpoint_by_unit("End", "Character", end)
@@ -61,7 +60,7 @@ def set_selection(document_range: TextRange, start: int, end: int):
 
 
 def get_selection(
-    document_range: TextRange, selection_range: TextRange
+    document_range: TextRange, selection_range: TextRange, caret_range: TextRange
 ) -> Tuple[int, int]:
     range_before_selection = document_range.clone()
     range_before_selection.move_endpoint_by_range(
@@ -79,4 +78,8 @@ def get_selection(
     )
     end = len(document_range.text) - len(range_after_selection.text)
 
-    return start, end
+    is_reversed = (
+        caret_range.compare_endpoints("Start", "Start", target=selection_range) == 0
+    )
+
+    return (end, start) if is_reversed else (start, end)
