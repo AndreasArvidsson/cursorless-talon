@@ -12,7 +12,7 @@ class Actions:
     def cursorless_js_get_document_state() -> (  # pyright: ignore [reportSelfClsParameterName]
         dict[str, Any]
     ):
-        """Get the current document state"""
+        """Get the focused element state"""
         el = ui.focused_element()
         text_pattern = el.text_pattern2
         document_range = text_pattern.document_range
@@ -34,7 +34,7 @@ class Actions:
     def cursorless_js_set_selection(
         selection: dict[str, int],  # pyright: ignore [reportGeneralTypeIssues]
     ):
-        """Set document selection"""
+        """Set focused element selection"""
         anchor = selection["anchor"]
         active = selection["active"]
 
@@ -44,6 +44,13 @@ class Actions:
         selection_range = text_pattern.selection[0]
 
         set_selection(document_range, selection_range, anchor, active)
+
+    def cursorless_js_set_text(
+        text: str,  # pyright: ignore [reportGeneralTypeIssues]
+    ):
+        """Set focused element text"""
+        el = ui.focused_element()
+        el.value_pattern.value = text
 
 
 def set_selection(
