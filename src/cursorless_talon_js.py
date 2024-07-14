@@ -14,6 +14,10 @@ class Actions:
     ):
         """Get the focused element state"""
         el = ui.focused_element()
+
+        if "Text2" not in el.patterns:
+            raise ValueError("Focused element is not a text element")
+
         text_pattern = el.text_pattern2
         document_range = text_pattern.document_range
         caret_range = text_pattern.caret_range
@@ -35,7 +39,13 @@ class Actions:
         anchor = selection["anchor"]
         active = selection["active"]
 
+        print(f"Setting selection to {anchor}, {active}")
+
         el = ui.focused_element()
+
+        if "Text2" not in el.patterns:
+            raise ValueError("Focused element is not a text element")
+
         text_pattern = el.text_pattern2
         document_range = text_pattern.document_range
 
@@ -45,11 +55,24 @@ class Actions:
         text: str,  # pyright: ignore [reportGeneralTypeIssues]
     ):
         """Set focused element text"""
+        print(f"Setting text to '{text}'")
+
         el = ui.focused_element()
+
+        if "Value" not in el.patterns:
+            raise ValueError("Focused element is not a text element")
+
         el.value_pattern.value = text
 
 
 def set_selection(document_range: TextRange, anchor: int, active: int):
+    # This happens in slack, for example. The document range starts with a
+    # newline and selecting first character we'll make the selection go outside
+    # of the edit box.
+    if document_range.text.startswith("\n") and anchor == 0 and active == 0:
+        anchor = 1
+        active = 1
+
     start = min(anchor, active)
     end = max(anchor, active)
     range = document_range.clone()
