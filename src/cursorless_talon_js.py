@@ -16,7 +16,7 @@ class Actions:
         document_range = text_pattern.document_range
         selection_range = text_pattern.selection[0]
 
-        starts, end = get_selection(
+        start, end = get_selection(
             document_range,
             selection_range,
         )
