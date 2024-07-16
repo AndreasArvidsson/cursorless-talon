@@ -9,10 +9,10 @@ mod = Module()
 
 @mod.action_class
 class Actions:
-    def cursorless_js_get_document_state() -> (  # pyright: ignore [reportSelfClsParameterName]
+    def cursorless_js_get_editor_state() -> (  # pyright: ignore [reportSelfClsParameterName]
         dict[str, Any]
     ):
-        """Get the focused element state"""
+        """Get the focused editor element state"""
         el = ui.focused_element()
 
         if "Text2" not in el.patterns:
