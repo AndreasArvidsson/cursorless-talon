@@ -40,10 +40,10 @@ bar {user.cursorless_homophone}:
 
 {user.cursorless_homophone} tutorial:
     user.private_cursorless_start_tutorial()
-tutorial next:              user.private_cursorless_tutorial_next()
+tutorial next: user.private_cursorless_tutorial_next()
 tutorial (previous | last): user.private_cursorless_tutorial_previous()
-tutorial restart:           user.private_cursorless_tutorial_restart()
-tutorial resume:            user.private_cursorless_tutorial_resume()
-tutorial (list | close):    user.private_cursorless_tutorial_list()
+tutorial restart: user.private_cursorless_tutorial_restart()
+tutorial resume: user.private_cursorless_tutorial_resume()
+tutorial (list | close): user.private_cursorless_tutorial_list()
 tutorial <number_small>:
     user.private_cursorless_tutorial_start_by_number(number_small)
