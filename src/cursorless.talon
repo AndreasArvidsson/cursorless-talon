@@ -15,11 +15,8 @@ tag: user.cursorless
 {user.cursorless_paste_action} <user.cursorless_destination>:
     user.private_cursorless_paste(cursorless_destination)
 
-<user.formatters> {user.cursorless_reformat_action} <user.cursorless_target>:
+{user.cursorless_reformat_action} <user.formatters> at <user.cursorless_target>:
     user.cursorless_reformat(cursorless_target, formatters)
-
-# {user.cursorless_reformat_action} <user.formatters> at <user.cursorless_target>:
-#     user.cursorless_reformat(cursorless_target, formatters)
 
 {user.cursorless_call_action} <user.cursorless_target> on <user.cursorless_target>:
     user.private_cursorless_call(cursorless_target_1, cursorless_target_2)
@@ -43,10 +40,10 @@ bar {user.cursorless_homophone}:
 
 {user.cursorless_homophone} tutorial:
     user.private_cursorless_start_tutorial()
-tutorial next: user.private_cursorless_tutorial_next()
+tutorial next:              user.private_cursorless_tutorial_next()
 tutorial (previous | last): user.private_cursorless_tutorial_previous()
-tutorial restart: user.private_cursorless_tutorial_restart()
-tutorial resume: user.private_cursorless_tutorial_resume()
-tutorial (list | close): user.private_cursorless_tutorial_list()
+tutorial restart:           user.private_cursorless_tutorial_restart()
+tutorial resume:            user.private_cursorless_tutorial_resume()
+tutorial (list | close):    user.private_cursorless_tutorial_list()
 tutorial <number_small>:
     user.private_cursorless_tutorial_start_by_number(number_small)
